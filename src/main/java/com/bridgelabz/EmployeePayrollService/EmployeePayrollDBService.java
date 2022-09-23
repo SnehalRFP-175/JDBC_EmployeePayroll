@@ -19,7 +19,7 @@ public class EmployeePayrollDBService {
 
     }
 
-    //UC2 Read Employee Payroll  
+    //UC2 Read Employee Payroll
     public List<EmployeePayroll> readData()
     {
         String sql = " SELECT * FROM employee_payroll; ";
@@ -48,25 +48,22 @@ public class EmployeePayrollDBService {
         return null;
     }
 
-    //UC3- Update Employee Payroll Database
+    //UC4- Update Employee Payroll Database By Using Prepared Statement
     public void updateData()
     {
         String sql = " UPDATE employee_payroll " +
-                "SET salary = 300000 " +
+                "SET salary = 400000 " +
                 "WHERE name = 'Terisa' ";
         try
         {
             Connection connection = this.getConnection();
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sql);
-            ResultSet result = statement.executeQuery(sql);
-            while(result.next())
+            PreparedStatement preparedStatmentDisplay = connection.prepareStatement(sql);
+            preparedStatmentDisplay.executeUpdate();
+            ResultSet resultSet = preparedStatmentDisplay.executeQuery();
+
+            while(resultSet.next())
             {
-                int id = result.getInt("id");
-                String name = result.getString("name");
-                double salary = result.getDouble("salary");
-                LocalDate startDate = result.getDate("startDate").toLocalDate();
-                System.out.println(id+","+name+","+salary+","+startDate);
+                System.out.println(resultSet.getInt(1)+ " " +resultSet.getString(2)+ " " + resultSet.getDouble(3)+" "+resultSet.getDate("startDate").toLocalDate());
             }
         }
 
