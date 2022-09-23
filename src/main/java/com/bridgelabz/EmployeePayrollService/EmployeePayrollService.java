@@ -41,14 +41,7 @@ public class EmployeePayrollService {
         return null;
     }
 
-    public List<EmployeePayroll> readEmployeePayrollData(IOService ioService)
-    {
-        if (ioService.equals(IOService.CONSOLE_IO))
-        {
-            this.employeePayrollList = new EmployeePayrollDBService().readData();
-        }
-        return this.employeePayrollList;
-    }
+
     public void writeEmployeePayrollData(){
         System.out.println("writing employee payroll data on console :");
         System.out.println(employeePayrollList);
