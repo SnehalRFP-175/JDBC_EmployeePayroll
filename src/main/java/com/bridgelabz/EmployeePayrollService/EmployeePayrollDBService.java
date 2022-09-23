@@ -18,6 +18,8 @@ public class EmployeePayrollDBService {
         return con;
 
     }
+
+    //UC2
     public List<EmployeePayroll> readData()
     {
         String sql = " SELECT * FROM employee_payroll; ";
@@ -34,7 +36,7 @@ public class EmployeePayrollDBService {
                 String name = result.getString("name");
                 double salary = result.getDouble("salary");
                 LocalDate startDate = result.getDate("startDate").toLocalDate();
-                employeePayrollList.add(new EmployeePayroll(id, name, salary, startDate));
+
                 System.out.println(id+","+name+","+salary+","+startDate);
             }
         }
@@ -46,10 +48,39 @@ public class EmployeePayrollDBService {
         return null;
     }
 
+    //UC3
+    public void updateData()
+    {
+        String sql = " UPDATE employee_payroll " +
+                "SET salary = 300000 " +
+                "WHERE name = 'Terisa' ";
+        try
+        {
+            Connection connection = this.getConnection();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sql);
+            ResultSet result = statement.executeQuery(sql);
+            while(result.next())
+            {
+                int id = result.getInt("id");
+                String name = result.getString("name");
+                double salary = result.getDouble("salary");
+                LocalDate startDate = result.getDate("startDate").toLocalDate();
+                System.out.println(id+","+name+","+salary+","+startDate);
+            }
+        }
+
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String a[])
     {
 
         EmployeePayrollDBService db = new EmployeePayrollDBService();
+        db.updateData();
         db.readData();
     }
 }
