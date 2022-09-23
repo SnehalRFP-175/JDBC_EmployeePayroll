@@ -1,8 +1,9 @@
 package com.bridgelabz.EmployeePayrollService;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmployeePayrollDBService {
     private Connection getConnection() throws SQLException
@@ -17,9 +18,38 @@ public class EmployeePayrollDBService {
         return con;
 
     }
+    public List<EmployeePayroll> readData()
+    {
+        String sql = " SELECT * FROM employee_payroll; ";
+
+        List<EmployeePayroll> employeePayrollList = new ArrayList<>();
+        try
+        {
+            Connection connection = this.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+            while(result.next())
+            {
+                int id = result.getInt("id");
+                String name = result.getString("name");
+                double salary = result.getDouble("salary");
+                LocalDate startDate = result.getDate("startDate").toLocalDate();
+                employeePayrollList.add(new EmployeePayroll(id, name, salary, startDate));
+                System.out.println(id+","+name+","+salary+","+startDate);
+            }
+        }
+
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static void main(String a[])
     {
+
         EmployeePayrollDBService db = new EmployeePayrollDBService();
+        db.readData();
     }
 }
