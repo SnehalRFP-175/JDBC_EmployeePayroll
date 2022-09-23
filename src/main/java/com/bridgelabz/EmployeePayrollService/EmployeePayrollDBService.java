@@ -19,7 +19,7 @@ public class EmployeePayrollDBService {
 
     }
 
-    //UC2
+    //UC2 Read Employee Payroll  
     public List<EmployeePayroll> readData()
     {
         String sql = " SELECT * FROM employee_payroll; ";
@@ -48,7 +48,7 @@ public class EmployeePayrollDBService {
         return null;
     }
 
-    //UC3
+    //UC3- Update Employee Payroll Database
     public void updateData()
     {
         String sql = " UPDATE employee_payroll " +
